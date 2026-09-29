@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de agendas digitales - IES Francisco Ros Giner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #fefdf8;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #f9d71c 0%, #fce181 100%);
+            border-bottom: 3px solid #000;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            height: 80px;
+            margin-bottom: 1rem;
+            object-fit: contain;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #000;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        nav {
+            background-color: #fff;
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 2px solid #f9d71c;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav a {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            margin: 0.25rem;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-eso {
+            background-color: #f9d71c;
+            color: #000;
+            border: 2px solid #000;
+        }
+
+        .nav-eso:hover {
+            background-color: #fce181;
+            transform: translateY(-2px);
+        }
+
+        .nav-bach {
+            background-color: #000;
+            color: #f9d71c;
+            border: 2px solid #f9d71c;
+        }
+
+        .nav-bach:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+        }
+
+        section h2 {
+            font-size: 1.8rem;
+            color: #000;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid;
+        }
+
+        #sec-eso h2 {
+            border-bottom-color: #f9d71c;
+        }
+
+        #sec-bach h2 {
+            border-bottom-color: #000;
+        }
+
+        .level {
+            margin-bottom: 2rem;
+        }
+
+        .level h3 {
+            font-size: 1.2rem;
+            color: #000;
+            margin: 1.5rem 0 1rem 0;
+            padding-left: 0.5rem;
+            border-left: 4px solid #f9d71c;
+            font-weight: 600;
+        }
+
+        #sec-bach .level h3 {
+            border-left-color: #000;
+        }
+
+        .grupos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .grupo-card {
+            background-color: #fff;
+            border: 2px solid #f9d71c;
+            border-radius: 8px;
+            padding: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .grupo-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(249, 215, 28, 0.3);
+            border-color: #000;
+            background-color: #fffbf0;
+        }
+
+        .grupo-card.bach {
+            border-color: #000;
+        }
+
+        .grupo-card.bach:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            background-color: #f5f5f5;
+        }
+
+        .grupo-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .grupo-name {
+            font-weight: 600;
+            color: #000;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .grupo-action {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .grupo-card:hover .grupo-action {
+            color: #000;
+        }
+
+        /* Para tarjetas que en el futuro no tengan enlace todavía */
+        .empty-link {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        footer {
+            background-color: #000;
+            color: #f9d71c;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .grupos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            nav a {
+                display: block;
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="PNG__LOGO_ACTUAL_FRANCISCO_ROS_GINER.png" alt="Logo IES Francisco Ros Giner" class="logo">
+            <h1>📚 Agendas digitales 2026/2027</h1>
+            <p class="subtitle">IES Francisco Ros Giner • Lorca, Murcia • Panel de control de grupos de alumnos</p>
+        </div>
+    </header>
+
+    <nav>
+        <a href="#sec-eso" class="nav-eso">🔴 Ir a agendas de ESO</a>
+        <a href="#sec-bach" class="nav-bach">🔵 Ir a agendas de Bachillerato</a>
+    </nav>
+
+    <main>
+        <!-- Educación Secundaria Obligatoria -->
+        <section id="sec-eso">
+            <h2>📅 Educación Secundaria Obligatoria (ESO)</h2>
+
+            <!-- 1º ESO -->
+            <div class="level">
+                <h3>1º de ESO</h3>
+                <div class="grupos-grid">
+                    <a href="https://drive.google.com/file/d/1b9UjxkQGP5ikorfhQGS9SToZFWIZEtPD/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">1º ESO A</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1l4HJEtbo1PKB1xb4yUJ72zGoCtNgTVdD/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">1º ESO B</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1dI-9C2uzmCusah3fANZKpCcK0AAydWJ8/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">1º ESO C</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1DXMu8PmhTH3eG_-HRwjHuQhsZGoeIEgT/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">1º ESO D</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1DCqJQVweeNHrlpXtenRKPCYNBnhhxaw4/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">1º ESO E</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1A3dUOXDc7a3xqlk5Bvk_3ktmF9y23led/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">1º ESO F</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1ZHhMDhov2ANEivzAXnICzwhn8o96Jno6/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">1º ESO G</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 2º ESO -->
+            <div class="level">
+                <h3>2º de ESO</h3>
+                <div class="grupos-grid">
+                    <a href="https://drive.google.com/file/d/1P0zM1SligEYaVKUlK5aLxavCf2P1yp8B/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">2º ESO A</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1n5z-qJRA5a9CF1Y0xPNfVyK05K456lhC/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">2º ESO B</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1VcYlDU_MKylweorH--zhPDf0dX5IU_SE/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">2º ESO C</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/11UfGSuTnTMTrLQB1tLtXX2dn7jFlrMVT/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">2º ESO D</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1FuXbzHS_kVr1kewVaKk5JWcTIujbWFLo/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">2º ESO E</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1GKbMrt9O4UaUYyR-FY64axTejtQFCH2V/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">2º ESO F</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3º ESO -->
+            <div class="level">
+                <h3>3º de ESO</h3>
+                <div class="grupos-grid">
+                    <a href="https://drive.google.com/file/d/1_1GMXvzOmV5LKmArY_jXcuQXKJ-bXDMk/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">3º ESO A</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1iPoRZcKydU8KJbRIOXwyrXwXQW4-ADvI/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">3º ESO B</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/15NHH70rnRDGllZB4IbcJ8YxqbC8UXoW1/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">3º ESO C</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1zGNGZKEYtFb_dRYxBI_3CiNT_CofVT4s/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">3º ESO D</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1qODPf93VQePNNtiUH9gjfzZsou_7VgMP/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">3º ESO E</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1l39rqoeij8HunHa6TtDkeBz-hYXShG01/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">3º ESO F</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1gGnelb5DWLZ-37zKvhKof_g0Zperot8s/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">3º Diversificación</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 4º ESO -->
+            <div class="level">
+                <h3>4º de ESO</h3>
+                <div class="grupos-grid">
+                    <a href="https://drive.google.com/file/d/1OaVKLaF_mfEz3-tLtl1JWEgP4AS8WCIJ/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">4º ESO A</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1iEvBlOJR9osnzShf9kTkhPFy3YAPXxvp/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">4º ESO B</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1QEbrefxzYJfbZVC3ltyp53LRKMy8ABcl/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">4º ESO C</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1nGRJQ8cJXaEDr3Elj5yvXaMinpPXxLhK/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">4º ESO D</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1YdP3ohBsQW8eDXuRHH7HBTNUf28ZI4XU/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">4º ESO E</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1duLlUWioM4LmXMkSC1AicgQypymKEDzh/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">4º ESO F</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bachillerato -->
+        <section id="sec-bach">
+            <h2>📅 Bachillerato</h2>
+
+            <!-- 1º Bachillerato -->
+            <div class="level">
+                <h3>1º de Bachillerato</h3>
+                <div class="grupos-grid">
+                    <a href="https://drive.google.com/file/d/1FYczI1aiXtV7v80gRC0hb6n3c3rIxBxT/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card bach">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">1º Bach A</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1ah26dfdzxHxtPzqqm8kaJfwlQWuH0vEW/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card bach">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">1º Bach B</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/19Cr1UeffFrChYH2TvEQwyZ5f_St-2BOC/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card bach">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">1º Bach C</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1BvGjYA5sMTXrND-fS_R2pbSoB4Rsajzq/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card bach">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">1º Bach D</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1ZDWuY5lrwKuaFxfMd47wQWxA8Axhli2l/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card bach">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">1º Bach E</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 2º Bachillerato -->
+            <div class="level">
+                <h3>2º de Bachillerato</h3>
+                <div class="grupos-grid">
+                    <a href="https://drive.google.com/file/d/1EU_UXUFH4yWXG42xqUi29yPfmEVGt9Yz/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card bach">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">2º Bach A</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/17_9bvVpIB4HXMJu0gGTOwQ-KCVGCwcG7/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card bach">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">2º Bach B</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/14lHRo95PsWdenHa1d9fhMuffWOmMx_9n/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card bach">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">2º Bach C</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1WlXGM_zW4LGA3zI-H4ID5Xv3xx_X1vE_/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card bach">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">2º Bach D</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                    <a href="https://drive.google.com/file/d/19HY86I_6sD3Zq0OsK7y9wLEFqHVRoX3W/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="grupo-card bach">
+                        <div class="grupo-icon">📅</div>
+                        <div class="grupo-name">2º Bach E</div>
+                        <div class="grupo-action">Agenda Digital</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 IES Francisco Ros Giner • Lorca, Murcia • Portal unificado de agendas de alumnos</p>
+    </footer>
+</body>
+</html>
